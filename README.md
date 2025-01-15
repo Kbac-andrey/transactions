@@ -1,4 +1,4 @@
-# RabobankTransactions
+# Transactions
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
 
@@ -8,7 +8,7 @@ Before starting the application, ensure the backend server is running. Instructi
 
 ## Development Server
 
-To start the development server for RabobankTransactions:
+To start the development server for Transactions:
 
 1. Ensure the backend server is running.
 2. Run the following command in the project root directory:
@@ -45,5 +45,7 @@ This will launch the Karma test runner and execute all unit tests defined in the
 - For detailed documentation on Angular CLI commands, refer to the [official Angular CLI documentation](https://angular.io/cli).
 - Ensure all dependencies are installed by running `npm install` before starting the server or building the project.
 - If you encounter any issues, check the `Backend.zip` documentation for backend-related configurations or errors.
+
+```
 
 ```
