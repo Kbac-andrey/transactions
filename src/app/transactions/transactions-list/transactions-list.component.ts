@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit, OnDestroy} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+
+import { Subject, takeUntil } from 'rxjs';
 
 import { IDayTransaction, ITransaction } from '../../types/transactions';
 import { ConvertCurrencyToEuroPipe } from '../helpers/convert-currency-to-euro.pipe';
@@ -22,7 +24,7 @@ import { TransactionsService } from '../services/transactions.service';
   templateUrl: './transactions-list.component.html',
   styleUrls: ['./transactions-list.component.scss'],
 })
-export class TransactionsListComponent implements OnInit, AfterViewInit {
+export class TransactionsListComponent implements AfterViewInit, OnInit, OnDestroy {
   public readonly DISPLAY_COLUMNS: string[] = ['date', 'otherParty', 'amount'];
   public readonly DATE_FORMAT: string = 'dd/MM/yyyy';
   public readonly PAGE_SIZE: number = 10;
@@ -30,6 +32,8 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
 
   public transactions!: ITransaction[];
   public dataSource:MatTableDataSource<ITransaction> = new MatTableDataSource<ITransaction>([]);
+
+  private _destroy$$ = new Subject<void>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -40,7 +44,9 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
   public ngOnInit(): void {
-    this._transactionsService.getTransactions$().subscribe((sortedDaysTransactions: IDayTransaction[]) => {
+    this._transactionsService.getTransactions$()
+      .pipe(takeUntil(this._destroy$$))
+      .subscribe((sortedDaysTransactions: IDayTransaction[]) => {
       this.transactions = sortedDaysTransactions.flatMap(day =>
         day.transactions.map((transaction: ITransaction) => ({
           ...transaction,
@@ -53,5 +59,10 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
 
   public getDetails(details: ITransaction): void {
     this._transactionsService.setTransaction(details);
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$$.next();
+    this._destroy$$.complete();
   }
 }
