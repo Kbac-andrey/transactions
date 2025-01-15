@@ -1,0 +1,36 @@
+<h2 class="transaction-detail-title">Transaction Details</h2>
+<mat-divider></mat-divider>
+<div *ngIf="transactionDetails$ | async as transaction" class="transaction-detail">
+  <p class="transaction-detail__item">
+    <span class="transaction-detail__label">Date:</span>
+    {{ transaction.timestamp | date: DATE_TIME_FORMAT}}
+  </p>
+  <p class="transaction-detail__item">
+    <span class="transaction-detail__label">Amount:</span>
+    <span [ngClass]="{
+      'positive-amount': transaction.amount > 0,
+      'negative-amount': transaction.amount < 0
+    }">
+       {{ transaction.amount | convertCurrencyToEuroPipe: transaction.currencyCode : transaction.currencyRate | number: '1.2-2' }} EUR
+    </span>
+  </p>
+  <p class="transaction-detail__item">
+    <span class="transaction-detail__label">Description:</span>
+    {{ transaction.description }}
+  </p>
+  <p *ngIf="transaction.otherParty?.name" class="transaction-detail__item">
+    <span class="transaction-detail__label">Name:</span>
+    <span [ngClass]="{ 'unknown-party': !transaction.otherParty?.name }">
+      {{ transaction.otherParty?.name || 'Unknown' }}
+    </span>
+  </p>
+  <p *ngIf="transaction.otherParty?.iban" class="transaction-detail__item">
+    <span class="transaction-detail__label">IBAN:</span>
+    {{ transaction.otherParty?.iban }}
+  </p>
+  <mat-divider></mat-divider>
+</div>
+<div class="details-action">
+  <!-- TODO: Remove  target attribute when fix CORS error-->
+  <a class="details-action__back" mat-button [routerLink]="['/']" target="_blank">Back to List</a>
+</div>

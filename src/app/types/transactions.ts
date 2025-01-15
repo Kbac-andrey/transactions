@@ -5,6 +5,7 @@ export interface IOtherParty {
 
 export interface ITransaction {
   id: number;
+  date?: string;
   timestamp: string;
   amount: number;
   currencyCode: string;
@@ -13,11 +14,11 @@ export interface ITransaction {
   otherParty?: IOtherParty;
 }
 
-export interface Day {
+export interface IDayTransaction {
   id: string;
   transactions: ITransaction[];
 }
 
 export interface TransactionsResponse {
-  days: Day[];
+  days: IDayTransaction[];
 }

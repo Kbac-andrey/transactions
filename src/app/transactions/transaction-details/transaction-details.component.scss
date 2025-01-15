@@ -1,0 +1,19 @@
+.transaction-detail-title {
+  text-align: center;
+}
+
+.transaction-detail {
+  margin-bottom: 15px;
+
+  &__label {
+    font-weight: bold;
+    padding-right: 5px;
+  }
+}
+
+.details-action {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: nowrap;
+}

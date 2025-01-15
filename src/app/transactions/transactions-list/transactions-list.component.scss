@@ -1,0 +1,22 @@
+.transactions-list__title {
+  margin-bottom: 20px;
+}
+
+table {
+  &.mat-elevation-z4 {
+    margin-top: 10px;
+  }
+
+  .table-row {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #007bff19;
+    }
+  }
+}
+
+mat-paginator {
+  margin-top: 20px;
+}
