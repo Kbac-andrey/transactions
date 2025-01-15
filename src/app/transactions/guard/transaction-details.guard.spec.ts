@@ -9,7 +9,6 @@ import { TransactionDetailsGuard } from './transaction-details.guard';
 import { TransactionsService } from '../services/transactions.service';
 import { ITransaction } from '../../types/transactions';
 
-
 describe('TransactionDetailsGuard', () => {
   let guard: TransactionDetailsGuard;
   let mockRouter: Router;
@@ -26,9 +25,9 @@ describe('TransactionDetailsGuard', () => {
       description: 'Test transaction',
     };
 
-    mockTransactionsService = jasmine.createSpyObj('TransactionsService', ['transaction$']);
-
-    spyOnProperty(mockTransactionsService, 'transaction$', 'get').and.returnValue(of(mockTransaction));
+    mockTransactionsService = jasmine.createSpyObj('TransactionsService', [], {
+      transaction$: of(mockTransaction), // Mock the getter directly
+    });
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
