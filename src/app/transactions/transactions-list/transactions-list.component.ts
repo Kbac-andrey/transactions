@@ -27,9 +27,9 @@ export class TransactionsListComponent implements OnInit, AfterViewInit {
   public readonly DATE_FORMAT: string = 'dd/MM/yyyy';
   public readonly PAGE_SIZE: number = 10;
   public readonly PAGE_SIZE_OPTIONS: number[] = [10, 20, 30];
-  public transactions!: ITransaction[];
 
-  dataSource:MatTableDataSource<ITransaction> = new MatTableDataSource<ITransaction>([]);
+  public transactions!: ITransaction[];
+  public dataSource:MatTableDataSource<ITransaction> = new MatTableDataSource<ITransaction>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
